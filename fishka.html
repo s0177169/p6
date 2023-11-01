@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <style>
+    body{
+      background-color: #899167;
+      min-height: 100vh;
+    }
+    html{
+    background-color: #27292b;
+  }
+  </style>
+
+  <head>
+    <title>DZ_6</title>
+    <meta charset="UTF-8">
+
+    <style>
+    h1 {
+    color: white;
+    font-size: 200%;
+    font-family: Arial, Verdana, sans-serif;
+    text-align: center;
+
+    }
+    .round-link {
+      display: inline-block;
+      color: #fff;
+      text-decoration: none;
+    }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    
+   <meta name="viewport" content="width=width-device, initial-scale=1" />
+
+    
+    <link rel="stylesheet" href="style/footer.css">
+    <link rel="stylesheet" href="style/header.css">
+    <link rel="stylesheet" href="style/nav.css">
+  </head>
+   
+  <body style="margin: 0px; background-color: #899167;" >
+    
+    <body style="margin:0px;"> 
+
+      <div p class="headbox">
+       
+        <img style="float:left; margin:10px; width:100px; height:100px;" img src="kub-znaniylogo.png" alt="кубик знаний" />
+          <div 
+            style="margin:5px; padding: 20px;"> <h1>Калькулятор стоимости заказа</h1>
+          </div>
+      </p></div>
+  
+    </body>
+
+    <div class="main-nav">
+      <main>
+        <div b class="main"></b>
+          
+          <div class="calculator">
+            <label for="quantity">Количество машин:</label>
+            <input type="number" id="quantity">
+            
+
+
+            <label for="product">на Срок:</label>
+            <select id="product" name="product">
+              <option value="product1"> Месяц</option>
+              <option value="product2"> Неделя</option>
+              <option value="product3"> День</option>
+            </select>
+
+            <div class="myradios" id="myradios">
+              <label><input type="radio" name="myradio" value="2.5" checked> водитель и механик от компании</label>
+              <label><input type="radio" name="myradio" value="1.5"> водитель от компании</label>
+              <label><input type="radio" name="myradio" value="1"> без персонала</label>
+
+            </div>
+            
+        
+              <input type="checkbox" id="property"> имеется страховка
+        
+            <button id="calculate">Рассчитать</button>
+        
+            <p id="total"></p>
+          </div>
+      </main>
+    </div>
+    
+
+    <script>
+        window.addEventListener('DOMContentLoaded', function (event) {
+        let s = document.getElementsByName("product");
+        s[0].addEventListener("change", function(event) {
+            let select = event.target;
+            let radios = document.getElementById("myradios");
+            console.log(select.value);
+            // Можно использовать getElementsByClassName()
+            if (select.value == "product3") {
+                radios.style.display = "none";
+            }
+            else {
+                radios.style.display = "block";
+            }
+        });
+
+        let r = document.querySelectorAll(".myradios input[type=radio]");
+        r.forEach(function(radio) {
+            radio.addEventListener("change", function(event) {
+                let r = event.target;
+                console.log(r.value);
+            });
+        });
+
+        });
+
+        // Получение элементов калькулятора
+        const quantityInput = document.getElementById('quantity');
+        const productSelect = document.getElementById('product');
+        const calculateButton = document.getElementById('calculate');
+        const totalOutput = document.getElementById('total');
+
+        // Добавление обработчика события для кнопки расчета
+        calculateButton.addEventListener('click', calculateTotal);
+
+        // Функция для расчета общей стоимости заказа
+        function calculateTotal() {
+        // Получение значения количества товара
+        const quantity = parseInt(quantityInput.value);
+
+        // Получение значения выбранного товара
+        const product = productSelect.value;
+
+        // Проверка наличия корректного значения количества
+        if (isNaN(quantity) || quantity <= 0) {
+            totalOutput.innerText = 'Ошибка: Проверьте введенное количество товара';
+            return;
+        }
+
+        // Расчет общей стоимости в зависимости от выбранного товара
+        let price = 0;
+        switch (product) {
+            case 'product1':
+            price = 200000;
+            break;
+            case 'product2':
+            price = 60000;
+            break;
+            case 'product3':
+            price = 10000;
+            break;
+            default:
+            totalOutput.innerText = 'Ошибка: Выберите товар';
+            return;
+        }
+        let bef =1;
+        let radios = document.querySelectorAll('input[type="radio"]');
+        if (price!=1000){
+            for (let radio of radios) 
+                if (radio.checked) {
+                    bef=radio.value;
+                }
+
+        }
+
+        let rad = document.getElementById('property');
+
+                if (rad.checked) {
+                    price=price/2;
+            } 
+
+
+
+        const total = quantity * price*bef;
+
+        // Вывод общей стоимости
+        totalOutput.innerText = `Общая стоимость: ${total} руб.`;
+        
+        }
+    </script>
+  </body>
+</html>
